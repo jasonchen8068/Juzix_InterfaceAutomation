@@ -1,0 +1,51 @@
+# -*- coding:utf-8 -*-
+from Method.Session import Session
+from Method import MD5
+from LogPrint import Log
+
+class Login(object):
+    def __init__(self, url, para, username, passwd):
+        self._url = url
+        self._username = username
+        self._passwd = passwd
+        self._para = para
+        self._res = self.Test_login(self._username, self._passwd)
+
+    def Test_login(self, username, passwd):
+        # 1-cookies
+        # 2-headers
+        headers = {'Content-Type': 'application/json;charset=UTF-8', 'Connection': 'keep-alive',
+                   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.117 Safari/537.36'}
+        # 3-session
+        Session1 = Session()
+        sess = Session1.start_session()
+        # 4-send request
+        # get captchacode
+        passwd = MD5.MD5().MD5encodePassword(passwd)
+        # handle para evaluation
+        paradict = {}
+        if len(self._para) > 0:
+            if type(self._para) != list:
+                try:
+                    self._para = list(self._para)
+                except:
+                    Log.warn("read para error")
+                    raise ValueError
+            paradict[self._para[0]] = username
+            paradict[self._para[1]] = passwd
+            paradict[self._para[2]] = False
+            paradict[self._para[3]] = '9xhc'
+            paradict[self._para[4]] = 'win10'
+
+        res = Session1.visit_url(sessiondata=sess, url=self._url, method='post', params=paradict, headers=headers, bodytype='json')
+        # print res
+        return res
+
+    # assert method
+    def Test_login_success_check(self):
+        res = self._res
+        return True
+
+    def Test_login_failure_check(self):
+
+        assert  self._res['body']['errMsg'] == '用户名/密码错误'

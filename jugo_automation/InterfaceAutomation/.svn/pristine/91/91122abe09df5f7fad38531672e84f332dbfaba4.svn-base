@@ -1,0 +1,18 @@
+[sendsmscode]
+uil=/admin-ws/jugo_api/pub/sendSmsCode
+para=['mobile', 'validPhone']
+[validsmscode]
+uil=/admin-ws/jugo_api/pub/validSmsCode
+para=['mobile', 'validcode']
+[getcollectinfo]
+uil=/admin-ws/jugo_api/pub/getCollectInfo
+para=[]
+[getcalculatedtrend]
+uil=/admin-ws/jugo_api/pub/getCalculatedTrend
+para=[]
+[login]
+uil=/admin-ws/jugo_api/user/org1/login
+para=['loginName', 'password', 'rememberMe', 'captchaCode', 'os']
+[logout]
+uil=/jugo_api/user/logout
+para=[]

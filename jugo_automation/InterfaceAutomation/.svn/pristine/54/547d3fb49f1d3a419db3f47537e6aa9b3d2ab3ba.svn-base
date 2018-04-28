@@ -1,0 +1,120 @@
+# -*- coding:utf-8 -*-
+__author__ = 'jasonchen'
+from TestBase import Test
+
+class SendSmsCode(Test):
+    def __init__(self, url, para, mobile):
+        Test.__init__(self)
+        self._url = url
+        self._para = para
+        self._mobile = mobile
+        self.res = self.Test_SendSmsCode()
+
+    def Test_SendSmsCode(self):
+        # 1-cookies
+        # 2-headers
+        # 3-session
+        sess = self.start_session()
+        # 4-send request
+        # handle para evaluation
+        paradict = {}
+        if len(self._para) > 0:
+            self.check_para(self._para)
+            paradict[self._para[0]] = self._mobile
+            paradict[self._para[1]] = True
+
+        res = self.visit_url(sessiondata=sess, url=self._url, method='post', params=paradict, headers=self.headers,
+                             bodytype='json')
+        # print res
+        return res
+
+    # assert method
+
+    def Test_failure_check(self):
+
+        assert self.res['body']['errMsg'] == '手机号未注册'
+
+
+class ValidSmsCode(Test):
+    def __init__(self, url, para, mobile, smscode):
+        Test.__init__(self)
+        self._url = url
+        self._para = para
+        self._mobile = mobile
+        self._smscode = smscode
+        self.res = self.Test_ValidSmsCode()
+
+    def Test_ValidSmsCode(self):
+        # 1-cookies
+        # 2-headers
+        # 3-session
+        sess = self.start_session()
+        # 4-send request
+        # handle para evaluation
+        paradict = {}
+        if len(self._para) > 0:
+            self.check_para(self._para)
+            paradict[self._para[0]] = self._mobile
+            paradict[self._para[1]] = self._smscode
+
+        res = self.visit_url(sessiondata=sess, url=self._url, method='post', params=paradict, headers=self.headers,
+                             bodytype='json')
+        return res
+
+    # assert method
+
+    def Test_failure_check(self):
+        assert self.res['body']['errMsg'] == '验证码错误'
+
+
+class GetCollectInfo(Test):
+
+    def __init__(self, url, para):
+        Test.__init__(self)
+        self._url = url
+        self._para = para
+        self.res = self.Test_GetCollectInfo()
+
+    def Test_GetCollectInfo(self):
+        # 1-cookies
+        # 2-headers
+        # 3-session
+        sess = self.start_session()
+        # 4-send request
+        # handle para evaluation
+        paradict = {}
+        if len(self._para) > 0:
+            self.check_para(self._para)
+
+        res = self.visit_url(sessiondata=sess, url=self._url, method='post', params=paradict, headers=self.headers,
+                             bodytype='json')
+        return res
+
+    # assert method
+
+class GetCalculatedTrend(Test):
+
+    def __init__(self, url, para):
+        Test.__init__(self)
+        self._url = url
+        self._para = para
+        self.res = self.Test_GetCalculatedTrend()
+
+    def Test_GetCalculatedTrend(self):
+        # 1-cookies
+        # 2-headers
+        # 3-session
+        sess = self.start_session()
+        # 4-send request
+        # handle para evaluation
+        paradict = {}
+        if len(self._para) > 0:
+            self.check_para(self._para)
+
+        res = self.visit_url(sessiondata=sess, url=self._url, method='post', params=paradict, headers=self.headers,
+                             bodytype='json')
+        return res
+
+    # assert method
+
+

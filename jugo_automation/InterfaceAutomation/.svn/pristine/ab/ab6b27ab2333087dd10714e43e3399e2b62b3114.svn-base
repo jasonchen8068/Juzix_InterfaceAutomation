@@ -1,0 +1,33 @@
+# -*- coding:utf-8 -*-
+import unittest
+from MyTools import MyTools
+from LoadConfig import LoadConfig
+from UserInerface import Login
+from LogPrint import Log
+
+class MyTestCase(unittest.TestCase):
+
+    def setUp(self):
+        LC = LoadConfig()
+        domain = LC.read_domain()
+        interface = LC.read_interface('login')
+        self.url = MyTools.montage_url(domain, interface[0])
+        self.para = interface[1]
+        # print self.para
+        Log.info("login Test Start")
+
+    def test001(self):
+        # success case
+        Login1 = Login(self.url, self.para ,'chenjinsong', '11111111')
+        Login1.Test_login_success_check()
+
+    def test002(self):
+        # failure case
+        Login2 = Login(self.url, self.para , 'chenjinsong', '11111112')
+        Login2.Test_login_failure_check()
+
+    def tearDown(self):
+        Log.info("login Test End")
+
+if __name__ == '__main__':
+    unittest.main()

@@ -1,0 +1,25 @@
+# -*- coding:utf-8 -*-
+__author__ = 'jasonchen'
+from LogPrint import Log
+from Session import Session
+class Test(Session):
+
+    def __init__(self):
+        Session.__init__(self)
+        pass
+
+    def check_para(self, para):
+        if type(para) != list:
+            try:
+                para = list(para)
+            except:
+                Log.warn("read para error")
+                raise ValueError
+
+    def Test_success_check(self, _res):
+
+        assert _res['body']['result'] == 0
+        assert _res['body']['errMsg'] == ''
+
+    def Test_failure_check(self):
+        pass

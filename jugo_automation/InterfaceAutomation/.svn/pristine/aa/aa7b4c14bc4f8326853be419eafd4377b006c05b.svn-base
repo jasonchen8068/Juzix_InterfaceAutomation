@@ -1,0 +1,6 @@
+[login]
+uil=/admin-ws/jugo_api/user/org1/login
+para=['loginName', 'password', 'rememberMe', 'captchaCode', 'os']
+[logout]
+uil=/jugo_api/user/logout
+para=[]

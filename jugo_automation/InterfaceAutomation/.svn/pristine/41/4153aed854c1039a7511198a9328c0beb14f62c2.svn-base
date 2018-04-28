@@ -1,0 +1,7 @@
+from Method.Session import Session
+class SendSmsCode(object):
+    def __init__(self, url):
+        self._url = url
+
+    def Test_SendSmsCode(self):
+        pass

@@ -1,0 +1,43 @@
+# -*- coding:utf-8 -*-
+__author__ = 'jasonchen'
+from Method import MD5
+from TestBase import Test
+
+class Login(Test):
+    def __init__(self, url, para, username, passwd):
+        Test.__init__(self, url, para)
+        self._username = username
+        self._passwd = passwd
+        self.res = self.Test_login(self._username, self._passwd)
+
+    def Test_login(self, username, passwd):
+        # 1-cookies
+        # 2-headers Test.headers
+        # 3-session
+        sess = self.start_session()
+        # 4-send request
+        # get captchacode
+        passwd = MD5.MD5().MD5encodePassword(passwd)
+        # handle para evaluation
+        paradict = {}
+        if len(self._para) > 0:
+            self.check_para(self._para)
+            paradict[self._para[0]] = username
+            paradict[self._para[1]] = passwd
+            paradict[self._para[2]] = False
+            paradict[self._para[3]] = '6666'
+            paradict[self._para[4]] = 'win10'
+
+        res = self.visit_url(sessiondata=sess, url=self._url, method='post', params=paradict, headers=self.headers, bodytype='json')
+        # print res
+        return res
+
+    def get_login_session(self):
+        return self.res
+
+    # assert method
+    # success check extends Test.Test_success_check
+
+    def Test_login_failure_check(self):
+
+        assert  self.res['body']['errMsg'] == '用户名/密码错误'
